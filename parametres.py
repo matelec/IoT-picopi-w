@@ -1,17 +1,26 @@
+import json
 import ubinascii
 import machine
 
-#SSID= "AP-IOT-BPCIEL"
-#PASSWORD= "wificielCIEL2024$"
+# Charger le fichier JSON
+try:
+    with open("config.json", "r") as file:
+        config = json.load(file)
+except Exception as e:
+    print("❌ Erreur : Impossible de charger config.json !", e)
+    config = {}  # Evite une erreur fatale si le fichier est absent
 
-SSID= "wifi627"
-PASSWORD= "4ddi54?*ehhp3PJW"
+# Wi-Fi
+SSID = config.get("wifi_ssid", "default_ssid")
+PASSWORD = config.get("wifi_password", "default_password")
 
+# MQTT
+MQTT_BROKER = config.get("mqtt_broker", "default_broker")
+MQTT_TOPIC = config.get("mqtt_topic", "default_topic")
+MQTT_USER = config.get("mqtt_user", "default_user")
+MQTT_PASSWORD = config.get("mqtt_password", "default_password")
 
-MQTT_TOPIC= " ici le topic "
+# Identifiant unique pour le client MQTT
+MQTT_CLIENT_ID = ubinascii.hexlify(machine.unique_id()).decode()
 
-mqtt_server = "adresse IP de votre RPI ZERO 2W" # Remplacez par vos infos
-# Création de l'identifiant
-mqtt_client_id = ubinascii.hexlify(machine.unique_id())
-usermqtt = "utilisateur enregistré sur le broker"
-usermdp = "mot de passe de l'utilisateur"
+print(f"📡 Paramètres chargés : WiFi={SSID}, Broker={MQTT_BROKER}")
