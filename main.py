@@ -1,5 +1,6 @@
+import json
 from ConnectWifi import WiFiConnection
-import parametres
+from parametres import SSID, PASSWORD
 from Temperature import readTemp
 from Affichage import oledTemp
 from Envoyer import startMQTT
@@ -26,7 +27,7 @@ def main():
     global temp
    
     ####connection au wifi#####
-    wifi = WiFiConnection(ssid=parametres.SSID, key=parametres.PASSWORD, max_retries=10)    #instance de la classe WifiConnection
+    wifi = WiFiConnection(ssid=SSID, key=PASSWORD, max_retries=10)    #instance de la classe WifiConnection
     print("Connexion au réseau Wi-Fi...")
     wlan = wifi.connect()                                     #connexion au réseau
     if wlan.isconnected():
