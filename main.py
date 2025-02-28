@@ -2,23 +2,23 @@ import json
 from ConnectWifi import WiFiConnection
 from parametres import SSID, PASSWORD
 from Temperature import LectureTemperature
-from Affichage import oledTemp
+from Affichage import AffichageOled
 from Envoyer import startMQTT
 from machine import Pin, SoftI2C
 import ssd1306
 import time   
 
 i2c = SoftI2C(scl=Pin(21), sda=Pin(20), freq=10000)
-Oled_width = 128
-Oled_height = 64
-Oled = ssd1306.SSD1306_I2C(Oled_width, Oled_height, i2c)
 buttonPin = Pin(19, Pin.IN)
 temp=25
+wifi = WiFiConnection(ssid=SSID, key=PASSWORD, max_retries=10)    #instance de la classe WifiConnection
+capteur_temp = LectureTemperature(i2c)                  #instance de la classe LectureTemperature
+ecran = AffichageOled(128, 64, i2c)                     #instance de la classe AffichageOled
 
 # définition de la fonction interruption bouton
 def interrupt_button(pin):
     global temp
-    oledTemp(Oled,temp)
+    ecran.oledTemp(temp)
 
 buttonPin.irq(trigger=Pin.IRQ_RISING, handler=interrupt_button)
 
@@ -27,7 +27,6 @@ def main():
     global temp
    
     ####connection au wifi#####
-    wifi = WiFiConnection(ssid=SSID, key=PASSWORD, max_retries=10)    #instance de la classe WifiConnection
     print("Connexion au réseau Wi-Fi...")
     wlan = wifi.connect()                                     #connexion au réseau
     if wlan.isconnected():
@@ -36,8 +35,6 @@ def main():
     else:
         print("Échec de la connexion.")
 
-    capteur_temp = LectureTemperature(i2c)                  #instance de la classe LectureTemperature
-    
     while True:
         temp = capteur_temp.readTemp()
         print (temp)
