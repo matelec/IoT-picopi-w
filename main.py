@@ -1,7 +1,7 @@
 import json
 from ConnectWifi import WiFiConnection
 from parametres import SSID, PASSWORD
-from Temperature import readTemp
+from Temperature import LectureTemperature
 from Affichage import oledTemp
 from Envoyer import startMQTT
 from machine import Pin, SoftI2C
@@ -36,8 +36,10 @@ def main():
     else:
         print("Échec de la connexion.")
 
+    capteur_temp = LectureTemperature(i2c)                  #instance de la classe LectureTemperature
+    
     while True:
-        temp= readTemp(i2c)
+        temp = capteur_temp.readTemp()
         print (temp)
         startMQTT(temp)
         time.sleep(5)      
