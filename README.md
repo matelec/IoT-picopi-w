@@ -17,5 +17,20 @@ Les paramètres sensibles sont enregistrés dans un fichier config.json. Vous de
     - "mqtt_user": "le compte user",
     - "mqtt_password": "mon_mdp"
     -    }
+# Configuration
+
+Voici les informations de configuration pour votre réseau Wi-Fi et votre serveur MQTT.
+
+## Wi-Fi Configuration
+
+- **SSID**: `le ssid`
+- **Mot de passe**: `la clé`
+
+## MQTT Configuration
+
+- **Adresse du broker MQTT**: `l'adresse IP`
+- **Topic MQTT**: `le topic`
+- **Utilisateur MQTT**: `le compte user`
+- **Mot de passe MQTT**: `mon_mdp`
 
 
