@@ -1,4 +1,4 @@
-from ConnectWifi import connect
+from ConnectWifi import WiFiConnection
 import parametres
 from Temperature import readTemp
 from Affichage import oledTemp
@@ -24,16 +24,14 @@ buttonPin.irq(trigger=Pin.IRQ_RISING, handler=interrupt_button)
 # définition du programme principal
 def main():
     global temp
-    ####appel de la fonction connection au wifi#####
-    ssid = parametres.SSID
-    password = parametres.PASSWORD
-    #appel de la librairie ConnectWifi.
+   
+    ####connection au wifi#####
+    wifi = WiFiConnection(ssid=parametres.SSID, key=parametres.PASSWORD, max_retries=10)    #instance de la classe WifiConnection
     print("Connexion au réseau Wi-Fi...")
-    wlan = connect(ssid, password)
-    #retour de la librairie.
+    wlan = wifi.connect()                                     #connexion au réseau
     if wlan.isconnected():
         print("Connecté avec succès!")
-        print("Adresse IP: ", wlan.ifconfig())
+        print("Adresse IP: ", wlan.ifconfig())                  #wlan est utilisable pour d'autres fonctions réseau
     else:
         print("Échec de la connexion.")
 
