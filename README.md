@@ -9,13 +9,13 @@ Voici le dépot du firmware des IoTs à base de Raspberry Pico Pi W. Le firmware
 ---
 
 Les paramètres sensibles sont enregistrés dans un fichier config.json. Vous devez respecter la structure suivante:
-    {
-    "wifi_ssid": "le ssid",
-    "wifi_password": "la clé",
-    "mqtt_broker": "l'adresse IP",
-    "mqtt_topic": "le topic",
-    "mqtt_user": "le compte user",
-    "mqtt_password": "mon_mdp"
-        }
+    - {
+    - "wifi_ssid": "le ssid",
+    - "wifi_password": "la clé",
+    - "mqtt_broker": "l'adresse IP",
+    - "mqtt_topic": "le topic",
+    - "mqtt_user": "le compte user",
+    - "mqtt_password": "mon_mdp"
+    -    }
 
 
