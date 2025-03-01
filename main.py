@@ -8,7 +8,7 @@ from machine import Pin, SoftI2C
 import ssd1306
 import time   
 
-i2c = SoftI2C(scl=Pin(21), sda=Pin(20), freq=10000)
+i2c = SoftI2C(scl=Pin(21), sda=Pin(20), freq=100000, timeout=5000)
 buttonPin = Pin(19, Pin.IN)
 temp=25
 wifi = WiFiConnection(ssid=SSID, key=PASSWORD, max_retries=10)    #instance de la classe WifiConnection
