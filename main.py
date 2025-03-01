@@ -8,11 +8,12 @@ from machine import Pin, SoftI2C
 import ssd1306
 import time   
 
+
 i2c = SoftI2C(scl=Pin(21), sda=Pin(20), freq=100000, timeout=5000)
 buttonPin = Pin(19, Pin.IN)
 temp=25
 wifi = WiFiConnection(ssid=SSID, key=PASSWORD, max_retries=10)    #instance de la classe WifiConnection
-capteur_temp = LectureTemperature(i2c)                  #instance de la classe LectureTemperature
+capteur_temp = LectureTemperature(i2c,Pin(21),Pin(20))                  #instance de la classe LectureTemperature
 ecran = AffichageOled(128, 64, i2c)                     #instance de la classe AffichageOled
 
 # définition de la fonction interruption bouton
@@ -37,8 +38,9 @@ def main():
 
     while True:
         temp = capteur_temp.readTemp()
-        print (temp)
-        startMQTT(temp)
+        if temp is not None:
+            print(f"Température : {temp} °C")
+   #     startMQTT(temp)
         time.sleep(5)      
 
 # programme principal.
