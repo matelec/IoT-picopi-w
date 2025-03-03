@@ -1,9 +1,9 @@
 import json
 from ConnectWifi import WiFiConnection
-from parametres import SSID, PASSWORD
+from parametres import SSID, PASSWORD, MQTT_BROKER, MQTT_CLIENT_ID, MQTT_TOPIC
 from Temperature import LectureTemperature
 from Affichage import AffichageOled
-from Envoyer import startMQTT
+from Envoyer import MqttConnection
 from machine import Pin, SoftI2C
 import ssd1306
 import time   
@@ -15,6 +15,7 @@ temp=25
 wifi = WiFiConnection(ssid=SSID, key=PASSWORD, max_retries=10)    #instance de la classe WifiConnection
 capteur_temp = LectureTemperature(i2c,Pin(21),Pin(20))                  #instance de la classe LectureTemperature
 ecran = AffichageOled(128, 64, i2c)                     #instance de la classe AffichageOled
+mqtt = MqttConnection(broker=MQTT_BROKER, identite= MQTT_CLIENT_ID, topic= MQTT_TOPIC)
 
 # définition de la fonction interruption bouton
 def interrupt_button(pin):
@@ -40,7 +41,7 @@ def main():
         temp = capteur_temp.readTemp()
         if temp is not None:
             print(f"Température : {temp} °C")
-   #     startMQTT(temp)
+        mqtt.startMQTT(str(temp))
         time.sleep(5)      
 
 # programme principal.

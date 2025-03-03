@@ -1,21 +1,23 @@
-import parametres
 from umqtt_simple import MQTTClient
 
+class MqttConnection:
+    def __init__(self, broker, identite, topic ):
+        self.broker= broker
+        self.identite= identite
+        self.topic= topic
 
-def startMQTT(message):
-    print("Connexion au broker MQTT...")
-    client = MQTTClient(
-        parametres.mqtt_client_id,
-        parametres.mqtt_server,
-        user=parametres.usermqtt,
-        password=parametres.usermdp
-    )
+    def startMQTT(self,temp):
+        print("Connexion au broker MQTT...")
+        client = MQTTClient(
+            self.identite,
+            self.broker,
+        )
 
-    # publication sur le topic
-    try:
-        client.connect()
-        print("Connected au broker MQTT avec succes!")
-        client.publish(parametres.MQTT_TOPIC, message)
-        client.disconnect()
-    except Exception as e:
-        print("Erreur lors de la connexion au broker MQTT :", e)
+        # publication sur le topic
+        try:
+            client.connect()
+            print("Connected au broker MQTT avec succes!")
+            client.publish(self.topic, temp)
+            client.disconnect()
+        except Exception as e:
+            print("Erreur lors de la connexion au broker MQTT :", e)
