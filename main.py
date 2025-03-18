@@ -14,7 +14,7 @@ temp=25
 wifi = WiFiConnection(ssid=SSID, key=PASSWORD, max_retries=10)    #instance de la classe WifiConnection
 capteur_temp = LectureTemperature(i2c,Pin(21),Pin(20))                  #instance de la classe LectureTemperature
 ecran = AffichageOled(128, 64, i2c)                     #instance de la classe AffichageOled
-mqtt = MqttConnection(broker=MQTT_BROKER, identite= MQTT_CLIENT_ID, topic= MQTT_TOPIC)
+mqtt = MqttConnection(broker=MQTT_BROKER, identite= MQTT_CLIENT_ID, topic= MQTT_TOPIC, user=MQTT_USER, password=MQTT_PASSWORD)
 
 # définition de la fonction interruption bouton
 def interrupt_button(pin):

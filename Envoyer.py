@@ -1,16 +1,20 @@
 from umqtt_simple import MQTTClient
 
 class MqttConnection:
-    def __init__(self, broker, identite, topic ):
+    def __init__(self, broker, identite, topic, user, password):
         self.broker= broker
         self.identite= identite
         self.topic= topic
+        self.user= user
+        self.password= password
 
     def startMQTT(self,temp):
         print("Connexion au broker MQTT...")
         client = MQTTClient(
             self.identite,
             self.broker,
+            self.user,
+            self.password
         )
 
         # publication sur le topic
